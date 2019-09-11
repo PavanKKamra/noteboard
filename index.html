@@ -1,3 +1,48 @@
 <h2>
     This is my web base note taking app
 </h2>
+<body>
+    <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+    <script> 
+    
+    const fs = new Filer.FileSystem();
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+
+    console.log('DOM fully loaded and parsed');
+
+    fs.readFile('/note', 'utf8', function (err, data) {
+    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
+    
+    if (data) {
+    document.querySelector('#note').innerHTML = data;
+    }
+
+    });
+
+    });
+
+
+window.setInterval(myCallback, 500);
+
+function myCallback()
+{
+
+
+ fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
+
+  if (err) throw err;  
+    }); 
+}
+
+   
+
+    </script>
+
+<div id="note" contenteditable>
+    <p>Welcome to my notepad!</p>
+</div>
+
+
+
+</body>
