@@ -1,95 +1,111 @@
 <h2>
     This is my web base note taking app
 </h2>
+
 <body>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
 
     <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
-    <script> 
-    
-    const fs = new Filer.FileSystem();
+    <script>
 
-    window.addEventListener('DOMContentLoaded', (event) => {
+        const fs = new Filer.FileSystem();
 
-    console.log('DOM fully loaded and parsed');
+        window.addEventListener('DOMContentLoaded', (event) => {
 
-    fs.readFile('/note', 'utf8', function (err, data) {
-    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
-    
-    if (data) {
-    document.querySelector('#note').innerHTML = data;
-    }
+            console.log('DOM fully loaded and parsed');
 
-    });
+            try {
+                fs.readFile('/note', 'utf8', function (err, data) {
+                    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
 
-    fs.readFile('/table', 'utf8', function (err, tab) {
-    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
-    
-    if (tab) {
-    document.querySelector('#table1').innerHTML = tab;
-    }
+                    if (data) {
+                        document.querySelector('#note').innerHTML = data;
+                    }
 
-    });
+                });
+            }
+            catch{
+                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) { if (err) throw error; })
 
-    });
+            }
+            try {
+                fs.readFile('/table', 'utf8', function (err, tab) {
+                    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
 
+                    if (tab) {
+                        document.querySelector('#table1').innerHTML = tab;
+                    }
 
-window.setInterval(myCallback, 500);
+                });
+            }
 
-function myCallback()
-{
+            catch {
+                fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
+                    if (err) throw err;
+                });
+            }
 
- fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
-  if (err) throw err;  
-    }); 
+            window.setInterval(myCallback(), 500);
 
-fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
-  if (err) throw err;  
-    }); 
-}
+            function myCallback() {
 
-function addRow(){
-    var MyTable =  document.getElementById("table1"); 
-            
-            // insert new row. 
-            var NewRow = MyTable.insertRow(1); 
-            var Newcell1 = NewRow.insertCell(0); 
-            var Newcell2 = NewRow.insertCell(1); 
-            var Newcell3 = NewRow.insertCell(2);
-            Newcell1.innerHTML = ""; 
-            Newcell2.innerHTML = ""; 
-            Newcell3.innerHTML = "";
-}
+                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
+                    if (err) throw err;
+                });
+
+                fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
+                    if (err) throw err;
+                });
+            }
+
+            function addRow() {
+                var MyTable = document.getElementById("table1");
+
+                // insert new row. 
+                var NewRow = MyTable.insertRow(1);
+                var Newcell1 = NewRow.insertCell(0);
+                var Newcell2 = NewRow.insertCell(1);
+                var Newcell3 = NewRow.insertCell(2);
+                Newcell1.innerHTML = "";
+                Newcell2.innerHTML = "";
+                Newcell3.innerHTML = "";
+            }
+        })
     </script>
-<style>table{text-align: center}</style>
 
-<div id="note" contenteditable style="min-height:15px">
-    <p>Welcome to my notepad! you can write here!</p>
-    
-</div>
-<h4> Give me feedback!</h4>
-<div  class="table-responsive">
-    
-<table width="400"class="table" id="table1" contenteditable>
-    <tr>
-        <th>Name</th>
-        <th>Rate me out of 10</th>
-        <th>State a fun fact about yourself!</th>
-    </tr>
-    
-    <tr>
-       <td id="note1"></td> 
-       <td id="note2"></td> 
-       <td id="note3"></td> 
-    </tr>
-    <tr>
-        <td> <button onclick="addRow()">Add Row</button></td>
-    </tr>
-</table>
-</div>
+    <style>
+        table {
+            text-align: center
+        }
+    </style>
+
+    <div id="note" contenteditable style="min-height:15px">
+        <p>Welcome to my notepad! you can write here!</p>
+
+    </div>
+    <h4> Give me feedback!</h4>
+    <div class="table-responsive">
+
+        <table width="400" class="table" id="table1" contenteditable>
+            <tr>
+                <th>Name</th>
+                <th>Rate me out of 10</th>
+                <th>State a fun fact about yourself!</th>
+            </tr>
+
+            <tr>
+                <td id="note1"></td>
+                <td id="note2"></td>
+                <td id="note3"></td>
+            </tr>
+            <tr>
+                <td> <button onclick="addRow()">Add Row</button></td>
+            </tr>
+        </table>
+    </div>
 
 </body>
