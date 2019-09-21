@@ -14,52 +14,35 @@
 
         const fs = new Filer.FileSystem();
 
-        window.addEventListener('DOMContentLoaded', (event) => {
+        document.addEventListener("DOMContentLoaded", () => {
+            fs.readFile('/note', 'utf-8', function(err, data){
+                if(data != null){
+                    //display data in the file
+                    document.getElementById("note").innerHTML=data
+                }
+                else if(err != null){
+                    //display "Welcome to my notepad!"
+                    document.getElementById("note").innerHTML="Welcome to my Whiteboard!"
+                }
+            });
+        });
+        var save = function(){
+            fs.writeFile('/note',document.querySelector('#note').innerHTML, function(err){
+               if(err!=null){
+                    console.log(err);
+                }
+            });
+        }
+        setInterval(save, 3000);
+        function myCallback() {
 
-            console.log('DOM fully loaded and parsed');
+            fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
+                 if (err) throw err;
+            });
 
-            try {
-                fs.readFile('/note', 'utf8', function (err, data) {
-                    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
-
-                    if (data) {
-                        document.querySelector('#note').innerHTML = data;
-                    }
-
-                });
-            }
-            catch{
-                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) { if (err) throw error; })
-
-            }
-            try {
-                fs.readFile('/table', 'utf8', function (err, tab) {
-                    if (err) throw err; // data is now the contents of /myfile.txt (i.e., a String);
-
-                    if (tab) {
-                        document.querySelector('#table1').innerHTML = tab;
-                    }
-
-                });
-            }
-
-            catch {
-                fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
-                    if (err) throw err;
-                });
-            }
-
-            window.setInterval(myCallback(), 500);
-
-            function myCallback() {
-
-                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
-                    if (err) throw err;
-                });
-
-                fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
-                    if (err) throw err;
-                });
+            fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
+                if (err) throw err;
+            });
             }
 
             function addRow() {
@@ -74,7 +57,6 @@
                 Newcell2.innerHTML = "";
                 Newcell3.innerHTML = "";
             }
-        })
     </script>
 
     <style>
