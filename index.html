@@ -62,6 +62,8 @@
                 });
             }
 
+            
+
             function addRow() {
                 var MyTable = document.getElementById("table1");
 
@@ -74,7 +76,19 @@
                 Newcell2.innerHTML = "";
                 Newcell3.innerHTML = "";
             }
+
+            
         })
+
+        function saveNote() {
+                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
+                if (err) throw err;  
+                    }); 
+            }
+
+        function clearNote() {
+            document.querySelector('#note').innerHTML = ""
+        }
     </script>
 
     <style>
@@ -87,6 +101,10 @@
         <p>Welcome to my notepad! you can write here!</p>
 
     </div>
+    
+    <button onclick="saveNote()">Save</button>
+    <button onclick="clearNote()">Clear</button>
+
     <h4> Give me feedback!</h4>
     <div class="table-responsive">
 
