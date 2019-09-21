@@ -43,20 +43,19 @@
             fs.writeFile('/table', document.querySelector('#table1').innerHTML, 'utf8', function (err) {
                 if (err) throw err;
             });
-            }
+        }
+        function addRow() {
+            var MyTable = document.getElementById("table1");
 
-            function addRow() {
-                var MyTable = document.getElementById("table1");
-
-                // insert new row. 
-                var NewRow = MyTable.insertRow(1);
-                var Newcell1 = NewRow.insertCell(0);
-                var Newcell2 = NewRow.insertCell(1);
-                var Newcell3 = NewRow.insertCell(2);
-                Newcell1.innerHTML = "";
-                Newcell2.innerHTML = "";
-                Newcell3.innerHTML = "";
-            }
+            // insert new row. 
+            var NewRow = MyTable.insertRow(1);
+            var Newcell1 = NewRow.insertCell(0);
+            var Newcell2 = NewRow.insertCell(1);
+            var Newcell3 = NewRow.insertCell(2);
+            Newcell1.innerHTML = "";
+            Newcell2.innerHTML = "";
+            Newcell3.innerHTML = "";
+        }
     </script>
 
     <style>
