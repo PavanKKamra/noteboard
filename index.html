@@ -36,6 +36,17 @@
         setInterval(save, 3000);
         function myCallback() {
 
+           
+
+        function saveNote() {
+                fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
+                if (err) throw err;  
+                    }); 
+            }
+
+        function clearNote() {
+            document.querySelector('#note').innerHTML = ""
+
             fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
                  if (err) throw err;
             });
@@ -68,6 +79,10 @@
         <p>Welcome to my notepad! you can write here!</p>
 
     </div>
+    
+    <button onclick="saveNote()">Save</button>
+    <button onclick="clearNote()">Clear</button>
+
     <h4> Give me feedback!</h4>
     <div class="table-responsive">
 
