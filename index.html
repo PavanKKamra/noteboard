@@ -34,9 +34,7 @@
             });
         }
         setInterval(save, 3000);
-        function myCallback() {
-
-           
+        //function myCallback() {
 
         function saveNote() {
                 fs.writeFile('/note', document.querySelector('#note').innerHTML, 'utf8', function (err) {
@@ -103,5 +101,4 @@
             </tr>
         </table>
     </div>
-
 </body>
